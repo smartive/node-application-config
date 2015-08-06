@@ -1,12 +1,12 @@
-var Config = require('./applicationConfig');
+var Config = require('./applicationConfig'),
+    _ = require('lodash'),
+    defaults = {
+        startupPath: process.cwd(),
+        configName: 'config.json',
+        localConfigName: 'config.local.json',
+        environmentPrefix: 'app_config_'
+    };
 
 exports = module.exports = function (options) {
-    options = options || {};
-
-    options.startupPath = options.startupPath || process.cwd();
-    options.configName = options.configName || 'config.json';
-    options.localConfigName = options.localConfigName || 'config.local.json';
-    options.environmentPrefix = options.environmentPrefix || 'app_config_';
-
-    return new Config(options);
+    return new Config(_.merge({}, defaults, options));
 };
