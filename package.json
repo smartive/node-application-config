@@ -1,0 +1,32 @@
+{
+  "name": "node-application-config",
+  "version": "0.1.0",
+  "description": "Application config package that provides a config object with support for local overrides and environmental overrides",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/buehler/node-application-config.git"
+  },
+  "keywords": [
+    "npm",
+    "node",
+    "config",
+    "application",
+    "environment-variable"
+  ],
+  "author": "Christoph Buehler <christoph.buehler@bluewin.ch>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/buehler/node-application-config/issues"
+  },
+  "homepage": "https://github.com/buehler/node-application-config#readme",
+  "devDependencies": {
+    "mocha": "^2.2.5"
+  },
+  "dependencies": {
+    "lodash": "^3.10.1"
+  }
+}
