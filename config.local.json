@@ -1,0 +1,12 @@
+{
+  "db": {
+    "pass": "mergePass"
+  },
+  "very": {
+    "nested": {
+      "config": {
+        "variableTwo": true
+      }
+    }
+  }
+}

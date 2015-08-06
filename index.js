@@ -1,6 +1,6 @@
-var Config = require('applicationConfig');
+var Config = require('./applicationConfig');
 
-exports = function (options) {
+exports = module.exports = function (options) {
     options = options || {};
 
     options.startupPath = options.startupPath || process.cwd();

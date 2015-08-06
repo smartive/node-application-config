@@ -4,7 +4,7 @@
   "description": "Application config package that provides a config object with support for local overrides and environmental overrides",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node_modules/mocha/bin/mocha"
   },
   "repository": {
     "type": "git",
@@ -24,7 +24,8 @@
   },
   "homepage": "https://github.com/buehler/node-application-config#readme",
   "devDependencies": {
-    "mocha": "^2.2.5"
+    "mocha": "^2.2.5",
+    "should": "^7.0.2"
   },
   "dependencies": {
     "lodash": "^3.10.1"

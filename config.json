@@ -1,0 +1,13 @@
+{
+  "db": {
+    "user": "test",
+    "pass": "testPass"
+  },
+  "very": {
+    "nested": {
+      "config": {
+        "variable": true
+      }
+    }
+  }
+}

@@ -2,3 +2,5 @@ support
 test
 examples
 .gitignore
+config.json
+config.local.json
