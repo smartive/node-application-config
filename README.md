@@ -4,7 +4,7 @@ package to provide application config with local config and environment support
 ## usage
 
 ```javascript
-var Config = require('application-config'),
+var Config = require('node-application-config'),
     config = new Config([options]);
 ```
 

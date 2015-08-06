@@ -1,5 +1,5 @@
 {
-  "name": "application-config",
+  "name": "node-application-config",
   "version": "0.1.0",
   "description": "Application config package that provides a config object with support for local overrides and environmental overrides",
   "main": "index.js",
