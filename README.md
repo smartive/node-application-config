@@ -1,4 +1,4 @@
-# node-application-config
+# node-application-config [![Build Status](https://travis-ci.org/buehler/node-application-config.svg?branch=master)](https://travis-ci.org/buehler/node-application-config)
 Package to provide application config with local config and environment support.
 This package allows you to simply override config variables by defining local config files or environment variables.
  
