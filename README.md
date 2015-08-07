@@ -1,6 +1,9 @@
 # node-application-config
 Package to provide application config with local config and environment support.
 This package allows you to simply override config variables by defining local config files or environment variables.
+ 
+Also `isDebug` and `isStage` are set based on `NODE_ENV`, which can be used in your code later on.
+
 
 ## Usage
 
