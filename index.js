@@ -4,7 +4,8 @@ var Config = require('./applicationConfig'),
         startupPath: process.cwd(),
         configName: 'config.json',
         localConfigName: 'config.local.json',
-        environmentPrefix: 'app_config_'
+        environmentPrefix: 'app_config_',
+        enableStateVariables: true
     };
 
 exports = module.exports = function (options) {
