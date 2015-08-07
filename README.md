@@ -59,7 +59,7 @@ config.json
 {
   "db": {
     "user": "test",
-    "pass": "testPass"
+    "pass": "testPass",
     "port": "10000"
   }
 }
@@ -70,7 +70,7 @@ config.local.json
 ```json
 {
   "db": {
-      "pass": "securePass"
+      "pass": "securePass",
       "host": "localhost"
   }
 }
