@@ -20,8 +20,9 @@ function Config(options) {
     this.startupPath = options.startupPath;
 
     if (options.enableStateVariables) {
-        this.isDebug = process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'staging';
         this.isStage = process.env.NODE_ENV === 'staging';
+        this.isProduction = process.env.NODE_ENV === 'production';
+        this.isDebug = !(this.isProduction || this.isStage);
     }
 
     function loadConfig() {
