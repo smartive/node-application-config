@@ -37,6 +37,11 @@ Prefix for environment variables that overwrite the configurations
 
 default: `app_config_`
 
+### enableStateVariables
+Enable the automatically set `isDebug` and `isStage` config variables, based on `NODE_ENV`
+
+default: `true`
+
 
 ## Priorities
 When merging config variables, the following priorities are taken into account:

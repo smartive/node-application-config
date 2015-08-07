@@ -18,8 +18,11 @@ function Config(options) {
     var self = this;
 
     this.startupPath = options.startupPath;
-    this.isDebug = process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'staging';
-    this.isStage = process.env.NODE_ENV !== 'staging';
+
+    if (options.enableStateVariables) {
+        this.isDebug = process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'staging';
+        this.isStage = process.env.NODE_ENV === 'staging';
+    }
 
     function loadConfig() {
         var config = require(path.join(self.startupPath, options.configName));
