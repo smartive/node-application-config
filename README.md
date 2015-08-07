@@ -1,6 +1,6 @@
 # node-application-config
-Package to provide application config with local config and environment support. This package allows you to simply overr
-
+Package to provide application config with local config and environment support.
+This package allows you to simply override config variables by defining local config files or environment variables.
 
 ## Usage
 
