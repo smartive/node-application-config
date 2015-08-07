@@ -4,3 +4,5 @@ examples
 .gitignore
 config.json
 config.local.json
+.git
+.idea

@@ -4,8 +4,8 @@ package to provide application config with local config and environment support
 ## usage
 
 ```javascript
-var Config = require('node-application-config'),
-    config = new Config([options]);
+var appConfig = require('node-application-config'),
+    config = appConfig([options]);
 ```
 
 ## configuration
@@ -31,3 +31,37 @@ default: 'config.local.json'
 prefix for environment variables that overwrite the configurations
 
 default: 'app_config_'
+
+## example
+config.json
+```json
+{
+  "db": {
+    "user": "test",
+    "pass": "testPass"
+  }
+}
+```
+config.local.json
+```json
+{
+  "db": {
+      "host": "localhost"
+  }
+}
+```
+environment variable
+```bash
+app_config_db_port=10000
+```
+
+results in:
+```javascript
+var appConfig = require('node-application-config'),
+    config = appConfig();
+    
+config.db.user == "test";
+config.db.pass == "testPass";
+config.db.host == "localhost";
+config.db.port == 10000;
+```
