@@ -20,7 +20,7 @@ var appConfig = require('node-application-config'),
 ### startupPath
 Base path for the application and for the config package to search for configurations
 
-default: process.cwd()
+default: `process.cwd()`
 
 ### configName
 Name of the base configuration
