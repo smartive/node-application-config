@@ -63,6 +63,7 @@ describe('Application config package', function () {
 
             should.not.exist(config.isDebug);
             should.not.exist(config.isStage);
+            should.not.exist(config.isProduction);
         });
 
         it('should configure isDebug correctly', function () {
@@ -70,6 +71,7 @@ describe('Application config package', function () {
 
             config.isDebug.should.equal(true);
             config.isStage.should.equal(false);
+            config.isProduction.should.equal(false);
         });
 
         it('should configure isStage correctly', function () {
@@ -79,12 +81,13 @@ describe('Application config package', function () {
             var config = appConfig();
 
             config.isDebug.should.equal(false);
+            config.isProduction.should.equal(false);
             config.isStage.should.equal(true);
 
             process.env.NODE_ENV = old;
         });
 
-        it('should configure production correctly', function () {
+        it('should configure isProduction correctly', function () {
             var old = process.env.NODE_ENV;
             process.env.NODE_ENV = 'production';
 
@@ -92,6 +95,7 @@ describe('Application config package', function () {
 
             config.isDebug.should.equal(false);
             config.isStage.should.equal(false);
+            config.isProduction.should.equal(true);
 
             process.env.NODE_ENV = old;
         });
@@ -117,7 +121,7 @@ describe('Application config package', function () {
                 config.very.nested.config.variable.should.equal(true);
                 config.very.nested.config.variableTwo.should.equal(true);
             });
-        })
+        });
     });
 
     describe('#reload', function () {

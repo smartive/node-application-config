@@ -2,7 +2,7 @@
 Package to provide application config with local config and environment support.
 This package allows you to simply override config variables by defining local config files or environment variables.
  
-Also `isDebug` and `isStage` are set based on `NODE_ENV`, which can be used in your code later on.
+Also `isDebug`, `isStage` and `isProduction` are set based on `NODE_ENV`, which can be used in your code later on.
 
 
 ## Usage
@@ -38,7 +38,7 @@ Prefix for environment variables that overwrite the configurations
 default: `app_config_`
 
 ### enableStateVariables
-Enable the automatically set `isDebug` and `isStage` config variables, based on `NODE_ENV`
+Enable the automatically set `isDebug`, `isStage` and `isProduction` config variables, based on `NODE_ENV`
 
 default: `true`
 
