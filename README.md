@@ -38,7 +38,8 @@ Prefix for environment variables that overwrite the configurations
 default: `app_config_`
 
 ### enableStateVariables
-Enable the automatically set `nodeEnv`, `isDebug`, `isStage` and `isProduction` config variables, based on `NODE_ENV`
+Enable the automatically set `nodeEnv`, `isDebug`, `isStage` and `isProduction` config variables, based on `NODE_ENV`.
+If no `NODE_ENV` is set, `development` is taken as fallback value.
 
 default: `true`
 
