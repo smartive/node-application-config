@@ -1,8 +1,8 @@
 # node-application-config [![Build Status](https://travis-ci.org/buehler/node-application-config.svg?branch=master)](https://travis-ci.org/buehler/node-application-config)
 Package to provide application config with local config and environment support.
 This package allows you to simply override config variables by defining local config files or environment variables.
- 
-Also `isDebug`, `isStage` and `isProduction` are set based on `NODE_ENV`, which can be used in your code later on.
+
+Also `nodeEnv`, `isDebug`, `isStage` and `isProduction` are set based on `NODE_ENV`, which can be used in your code later on.
 
 
 ## Usage
@@ -38,7 +38,7 @@ Prefix for environment variables that overwrite the configurations
 default: `app_config_`
 
 ### enableStateVariables
-Enable the automatically set `isDebug`, `isStage` and `isProduction` config variables, based on `NODE_ENV`
+Enable the automatically set `nodeEnv`, `isDebug`, `isStage` and `isProduction` config variables, based on `NODE_ENV`
 
 default: `true`
 
@@ -86,7 +86,7 @@ app_config_db_port=1337
 ```javascript
 var appConfig = require('node-application-config'),
     config = appConfig();
-    
+
 config.db.user == "test";
 config.db.pass == "securePass";
 config.db.host == "localhost";

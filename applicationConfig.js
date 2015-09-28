@@ -20,8 +20,9 @@ function Config(options) {
     this.startupPath = options.startupPath;
 
     if (options.enableStateVariables) {
-        this.isStage = process.env.NODE_ENV === 'staging';
-        this.isProduction = process.env.NODE_ENV === 'production';
+        this.nodeEnv = process.env.NODE_ENV;
+        this.isStage = this.nodeEnv === 'staging';
+        this.isProduction = this.nodeEnv === 'production';
         this.isDebug = !(this.isProduction || this.isStage);
     }
 
