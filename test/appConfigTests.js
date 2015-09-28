@@ -61,6 +61,7 @@ describe('Application config package', function () {
                 enableStateVariables: false
             });
 
+            should.not.exist(config.nodeEnv);
             should.not.exist(config.isDebug);
             should.not.exist(config.isStage);
             should.not.exist(config.isProduction);
@@ -69,6 +70,7 @@ describe('Application config package', function () {
         it('should configure isDebug correctly', function () {
             var config = appConfig();
 
+            config.nodeEnv.should.equal('development');
             config.isDebug.should.equal(true);
             config.isStage.should.equal(false);
             config.isProduction.should.equal(false);
