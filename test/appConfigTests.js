@@ -80,6 +80,7 @@ describe('Application config package', function () {
 
             var config = appConfig();
 
+            config.nodeEnv.should.equal('staging');
             config.isDebug.should.equal(false);
             config.isProduction.should.equal(false);
             config.isStage.should.equal(true);
@@ -93,6 +94,7 @@ describe('Application config package', function () {
 
             var config = appConfig();
 
+            config.nodeEnv.should.equal('production');
             config.isDebug.should.equal(false);
             config.isStage.should.equal(false);
             config.isProduction.should.equal(true);
