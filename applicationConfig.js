@@ -1,7 +1,24 @@
 var path = require('path'),
     fs = require('fs'),
     _ = require('lodash'),
-    helpers = require('./helpers');
+    helpers = require('./helpers'),
+    redirectPattern = /[$][{](.*)[}]/;
+
+function iterate(object, func){
+    _.forOwn(object, function(value, key){
+        if(_.isPlainObject(value)){
+            return iterate(value, func);
+        }
+        object[key] = func(value);
+    })
+}
+
+function redirectVariable(value){
+    if(!redirectPattern.test(value)) return value;
+    var matches = value.match(redirectPattern),
+        varName = matches[matches.length-1];
+    return process.env[varName] || value;
+}
 
 function Config(options) {
     var self = this;
@@ -18,6 +35,9 @@ function Config(options) {
     function loadConfig() {
         var config = require(path.join(self.startupPath, options.configName));
         _.merge(self, config);
+
+        //redirect vars
+        iterate(self, redirectVariable);
 
         //overwrite config with config.local.json
         var localConfigPath = path.join(self.startupPath, options.localConfigName);
