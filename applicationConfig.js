@@ -28,27 +28,26 @@ function Config(options) {
 
         //overwrite config with set environment variables (config_...)
         var envConfig = {};
-        for (var prop in process.env) {
-            if (process.env.hasOwnProperty(prop) && prop.indexOf(options.environmentPrefix) === 0) {
-                var varPath = prop.replace(options.environmentPrefix, '').split('_');
-                var selectedObject = envConfig;
-                for (var x = 0; x < varPath.length; x++) {
-                    if (x !== (varPath.length - 1)) {
-                        if (!selectedObject[varPath[x]]) selectedObject[varPath[x]] = {};
-                        selectedObject = selectedObject[varPath[x]];
+        _.forOwn(process.env, function(value, key){
+            if (key.indexOf(options.environmentPrefix) !== 0) return;
+
+            var varPath = key.replace(options.environmentPrefix, '').split('_');
+            var selectedObject = envConfig;
+            for (var x = 0; x < varPath.length; x++) {
+                if (x !== (varPath.length - 1)) {
+                    if (!selectedObject[varPath[x]]) selectedObject[varPath[x]] = {};
+                    selectedObject = selectedObject[varPath[x]];
+                } else {
+                    if (helpers.isNumeric(value)) {
+                        selectedObject[varPath[x]] = parseFloat(value);
+                    } else if (helpers.isBoolean(value)) {
+                        selectedObject[varPath[x]] = helpers.toBoolean(value);
                     } else {
-                        var value = process.env[prop];
-                        if (helpers.isNumeric(value)) {
-                            selectedObject[varPath[x]] = parseFloat(value);
-                        } else if (helpers.isBoolean(value)) {
-                            selectedObject[varPath[x]] = helpers.toBoolean(value);
-                        } else {
-                            selectedObject[varPath[x]] = process.env[prop];
-                        }
+                        selectedObject[varPath[x]] = value;
                     }
                 }
             }
-        }
+        });
         _.merge(self, envConfig);
     }
 
