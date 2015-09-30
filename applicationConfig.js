@@ -1,18 +1,7 @@
 var path = require('path'),
     fs = require('fs'),
-    _ = require('lodash');
-
-function isNumeric(number) {
-    return !isNaN(parseFloat(number)) && isFinite(number);
-}
-
-function isBoolean(str) {
-    return (/^true|false$/i).test(str);
-}
-
-function toBoolean(str) {
-    return str == 'true';
-}
+    _ = require('lodash'),
+    helpers = require('./helpers');
 
 function Config(options) {
     var self = this;
@@ -49,10 +38,10 @@ function Config(options) {
                         selectedObject = selectedObject[varPath[x]];
                     } else {
                         var value = process.env[prop];
-                        if (isNumeric(value)) {
+                        if (helpers.isNumeric(value)) {
                             selectedObject[varPath[x]] = parseFloat(value);
-                        } else if (isBoolean(value)) {
-                            selectedObject[varPath[x]] = toBoolean(value);
+                        } else if (helpers.isBoolean(value)) {
+                            selectedObject[varPath[x]] = helpers.toBoolean(value);
                         } else {
                             selectedObject[varPath[x]] = process.env[prop];
                         }
