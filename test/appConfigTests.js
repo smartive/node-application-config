@@ -172,7 +172,7 @@ describe('Application config package', function () {
                 should.exist(config.special.routes.evaluateNot);
 
                 config.special.routes.evaluateNot.should.startWith('Error:');
-                config.special.routes.evaluateNot.should.match(/.*command not found.*/);
+                config.special.routes.evaluateNot.should.match(/.*noop.*/);
             });
         });
     });
