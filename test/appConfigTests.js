@@ -154,6 +154,27 @@ describe('Application config package', function () {
                 config.special.routes.redirectNot.should.equal('TEST_ENV_VAR_NOT_SET');
             });
         });
+
+        describe('evaluating variables', function () {
+            it('should evaluate echo "hello" correctly', function () {
+                var config = appConfig();
+
+                should.exist(config.special);
+                should.exist(config.special.routes.evaluate);
+
+                config.special.routes.evaluate.should.equal('hello\n');
+            });
+
+            it('should add an error message for "noop"', function () {
+                var config = appConfig();
+
+                should.exist(config.special);
+                should.exist(config.special.routes.evaluateNot);
+
+                config.special.routes.evaluateNot.should.startWith('Error:');
+                config.special.routes.evaluateNot.should.match(/.*command not found.*/);
+            });
+        });
     });
 
     describe('#reload', function () {
