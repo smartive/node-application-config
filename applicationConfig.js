@@ -10,14 +10,14 @@ function iterate(object, func){
             return iterate(value, func);
         }
         object[key] = func(value);
-    })
+    });
 }
 
 function redirectVariable(value){
     if(!redirectPattern.test(value)) return value;
     var matches = value.match(redirectPattern),
         varName = matches[matches.length-1];
-    return process.env[varName] || value;
+    return process.env[varName] || varName;
 }
 
 function Config(options) {

@@ -126,6 +126,34 @@ describe('Application config package', function () {
                 config.very.nested.config.variableTwo.should.equal(true);
             });
         });
+
+        describe('redirecting variables', function () {
+            before(function () {
+                process.env.TEST_ENV_VAR = 'setVariable';
+            });
+
+            after(function () {
+                delete process.env.TEST_ENV_VAR;
+            });
+
+            it('should redirect the correct environment variables', function () {
+                var config = appConfig();
+
+                should.exist(config.special);
+                should.exist(config.special.routes.redirect);
+
+                config.special.routes.redirect.should.equal('setVariable');
+            });
+
+            it('should leave the not set variables as they are', function () {
+                var config = appConfig();
+
+                should.exist(config.special);
+                should.exist(config.special.routes.redirectNot);
+
+                config.special.routes.redirectNot.should.equal('TEST_ENV_VAR_NOT_SET');
+            });
+        });
     });
 
     describe('#reload', function () {

@@ -13,7 +13,9 @@
   "special": {
     "routes": {
       "redirect": "${TEST_ENV_VAR}",
-      "evaluate": "!{echo \"hello\"}"
+      "redirectNot": "${TEST_ENV_VAR_NOT_SET}",
+      "evaluate": "!{echo \"hello\"}",
+      "evaluateNot": "!{noop}"
     }
   }
 }
