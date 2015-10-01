@@ -1,10 +1,8 @@
 var path = require('path'),
     fs = require('fs'),
     _ = require('lodash'),
-    childProcess = require('child_process'),
     helpers = require('./helpers'),
-    redirectPattern = /[$][{](.*)[}]/,
-    evaluatePattern = /[!][{](.*)[}]/;
+    redirectPattern = /[$][{](.*)[}]/;
 
 function iterate(object, func){
     _.forOwn(object, function(value, key){
@@ -20,20 +18,6 @@ function redirectVariable(value){
     var matches = value.match(redirectPattern),
         varName = matches[matches.length-1];
     return process.env[varName] || varName;
-}
-
-function evaluateVariable(value) {
-    if (!evaluatePattern.test(value)) return value;
-    var matches = value.match(evaluatePattern),
-        command = matches[matches.length - 1];
-
-    try {
-        var result = childProcess.execSync(command);
-        return result.toString();
-    } catch (e) {
-        process.stderr.write(e.toString());
-        return e.toString();
-    }
 }
 
 function Config(options) {
@@ -54,9 +38,6 @@ function Config(options) {
 
         //redirect vars
         iterate(self, redirectVariable);
-
-        //evaluate vars
-        iterate(self, evaluateVariable);
 
         //overwrite config with config.local.json
         var localConfigPath = path.join(self.startupPath, options.localConfigName);
