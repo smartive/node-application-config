@@ -4,6 +4,28 @@ This package allows you to simply override config variables by defining local co
 
 Also `nodeEnv`, `isDebug`, `isStage` and `isProduction` are set based on `NODE_ENV`, which can be used in your code later on.
 
+## Features
+
+### Parse environment variables
+
+If you want to parse other environmental variables into your application config, and you cannot (or you don't wanna) use `process.env` you can use the parsing feature.
+If you declare a config variable with the following pattern: `${ENV_VAR_NAME}`, the config application will match it to the corresponding environment variable.
+
+#### Example
+
+```bash
+export TEXT_ENV_VAR=foobar
+```
+
+```json
+{
+  "db": {
+    "host": "${TEST_ENV_VAR}"
+  }
+}
+```
+
+In this case, `config.db.host` will be parsed to "foobar".
 
 ## Usage
 
