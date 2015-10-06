@@ -14,7 +14,7 @@ If you declare a config variable with the following pattern: `${ENV_VAR_NAME}`, 
 #### Example
 
 ```bash
-export TEXT_ENV_VAR=foobar
+export TEST_ENV_VAR=foobar
 ```
 
 ```json
