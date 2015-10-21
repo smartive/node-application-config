@@ -25,14 +25,12 @@ function Config(options) {
 
     this.startupPath = options.startupPath;
 
-    if (options.enableStateVariables) {
-        this.nodeEnv = process.env.NODE_ENV ? process.env.NODE_ENV : 'development';
-        this.isStage = this.nodeEnv === 'staging';
-        this.isProduction = this.nodeEnv === 'production';
-        this.isDebug = !(this.isProduction || this.isStage);
-    }
-
     function loadConfig() {
+        if (options.enableStateVariables) {
+            self.nodeEnv = process.env.NODE_ENV ? process.env.NODE_ENV : 'development';
+            self.isDebug = !(self.nodeEnv === 'production');
+        }
+
         var config = require(path.join(self.startupPath, options.configName));
         _.merge(self, config);
 
@@ -62,6 +60,8 @@ function Config(options) {
                         selectedObject[varPath[x]] = parseFloat(value);
                     } else if (helpers.isBoolean(value)) {
                         selectedObject[varPath[x]] = helpers.toBoolean(value);
+                    } else if (value.indexOf('|') !== -1) {
+                        selectedObject[varPath[x]] = value.split('|');
                     } else {
                         selectedObject[varPath[x]] = value;
                     }
