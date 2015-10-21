@@ -72,22 +72,6 @@ describe('Application config package', function () {
 
             config.nodeEnv.should.equal('development');
             config.isDebug.should.equal(true);
-            config.isStage.should.equal(false);
-            config.isProduction.should.equal(false);
-        });
-
-        it('should configure isStage correctly', function () {
-            var old = process.env.NODE_ENV;
-            process.env.NODE_ENV = 'staging';
-
-            var config = appConfig();
-
-            config.nodeEnv.should.equal('staging');
-            config.isDebug.should.equal(false);
-            config.isProduction.should.equal(false);
-            config.isStage.should.equal(true);
-
-            process.env.NODE_ENV = old;
         });
 
         it('should configure isProduction correctly', function () {
@@ -98,8 +82,6 @@ describe('Application config package', function () {
 
             config.nodeEnv.should.equal('production');
             config.isDebug.should.equal(false);
-            config.isStage.should.equal(false);
-            config.isProduction.should.equal(true);
 
             process.env.NODE_ENV = old;
         });
@@ -107,10 +89,12 @@ describe('Application config package', function () {
         describe('environmental variables', function () {
             before(function () {
                 process.env.app_config_db_user = 'envUser';
+                process.env.app_config_arrayType = 'string1|string2|string3';
             });
 
             after(function () {
                 delete process.env.app_config_db_user;
+                delete process.env.app_config_arrayType;
             });
 
             it('should merge config correctly with environment variables', function () {
@@ -124,6 +108,17 @@ describe('Application config package', function () {
 
                 config.very.nested.config.variable.should.equal(true);
                 config.very.nested.config.variableTwo.should.equal(true);
+            });
+
+            it('should parse an array correctly', function () {
+                var config = appConfig();
+
+                should.exist(config.arrayType);
+
+                config.arrayType
+                    .should.be.an.Array()
+                    .and.containDeep(['string1', 'string2', 'string3'])
+                    .and.have.length(3);
             });
         });
 
@@ -171,6 +166,18 @@ describe('Application config package', function () {
             config.reload();
 
             config.db.user.should.equal('envUser');
+        });
+
+        it('should reload and merge isDebug correctly', function () {
+            var config = appConfig();
+
+            config.isDebug.should.equal(true);
+
+            process.env.NODE_ENV = 'production';
+
+            config.reload();
+
+            config.isDebug.should.equal(false);
         });
     });
 });
