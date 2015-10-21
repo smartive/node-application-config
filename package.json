@@ -1,6 +1,6 @@
 {
   "name": "node-application-config",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Application config package that provides a config object with support for local overrides and environmental overrides",
   "main": "index.js",
   "scripts": {
