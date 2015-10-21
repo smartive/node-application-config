@@ -2,7 +2,7 @@
 Package to provide application config with local config and environment support.
 This package allows you to simply override config variables by defining local config files or environment variables.
 
-Also `nodeEnv`, `isDebug`, `isStage` and `isProduction` are set based on `NODE_ENV`, which can be used in your code later on.
+Also `nodeEnv`, and `isDebug` are set based on `NODE_ENV`, which can be used in your code later on.
 
 ## Features
 
@@ -26,6 +26,32 @@ export TEST_ENV_VAR=foobar
 ```
 
 In this case, `config.db.host` will be parsed to "foobar".
+
+### Parse environment array variables
+
+If you want to overwrite an array with a config variable (maybe you have a list of languages), you can overwrite the array with the following syntax:
+
+`ARRAY_ENV=str1|str2|str3`
+
+This feature is only necessary if you want to overwrite an array with environment variables, since you can use arrays in the `config.json` and the `config.local.json` files.
+
+#### Example
+
+```bash
+export app_config_arrayType=string1|string2|string3
+```
+
+Results in:
+
+```json
+{
+  "arrayType": [
+    "string1",
+    "string2",
+    "string3"
+  ]
+}
+```
 
 ## Usage
 
@@ -115,3 +141,15 @@ config.db.pass == "securePass";
 config.db.host == "localhost";
 config.db.port == 1337;
 ```
+
+## Changelog
+
+### v0.1.6
+
+- Removed `isStage` and `isProduction` since the environments aren't based on those variables. The only one you should use is `isDebug` as it is used by nodeJS itself (nodeJS determines production mode with `NODE_ENV === 'production'`).
+- Added array parsing feature for environment variables
+- Changed tests
+
+### v0.1.5
+
+- Added feature to redirect environment variables
