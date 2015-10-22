@@ -28,7 +28,7 @@ function Config(options) {
     function loadConfig() {
         if (options.enableStateVariables) {
             self.nodeEnv = process.env.NODE_ENV ? process.env.NODE_ENV : 'development';
-            self.isDebug = !(self.nodeEnv === 'production');
+            self.isDebug = self.nodeEnv !== 'production';
         }
 
         var config = require(path.join(self.startupPath, options.configName));

@@ -120,6 +120,29 @@ describe('Application config package', function () {
                     .and.containDeep(['string1', 'string2', 'string3'])
                     .and.have.length(3);
             });
+
+            it('should create an additional property correctly', function () {
+                process.env.app_config_additional = 'additionalProperty';
+                var config = appConfig();
+
+                should.exist(config.additional);
+
+                config.additional.should.be.equal('additionalProperty');
+
+                delete process.env.app_config_additional;
+            });
+
+            it('should create a nested additional property correctly', function () {
+                process.env.app_config_additional_variable = 'additionalProperty';
+                var config = appConfig();
+
+                should.exist(config.additional);
+                should.exist(config.additional.variable);
+
+                config.additional.variable.should.be.equal('additionalProperty');
+
+                delete process.env.app_config_additional_variable;
+            });
         });
 
         describe('redirecting variables', function () {
