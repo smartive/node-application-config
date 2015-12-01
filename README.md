@@ -150,6 +150,10 @@ config.db.port == 1337;
 
 ## Changelog
 
+### v0.1.7
+
+- adding possibility to parse empty or single element arrays from environmental variables.
+
 ### v0.1.6
 
 - Removed `isStage` and `isProduction` since the environments aren't based on those variables. The only one you should use is `isDebug` as it is used by nodeJS itself (nodeJS determines production mode with `NODE_ENV === 'production'`).
