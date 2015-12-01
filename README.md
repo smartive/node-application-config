@@ -33,12 +33,14 @@ If you want to overwrite an array with a config variable (maybe you have a list 
 
 `ARRAY_ENV=str1|str2|str3`
 
-This feature is only necessary if you want to overwrite an array with environment variables, since you can use arrays in the `config.json` and the `config.local.json` files.
+This feature is only necessary if you want to overwrite an array with environment variables, since you can use arrays in the `config.json` and the `config.local.json` files. If you want to overwrite a variable with a single element array or even an empty array, you can simply pass `str1|` for a single element array or `|` for an empty array.
 
 #### Example
 
 ```bash
 export app_config_arrayType=string1|string2|string3
+export app_config_emptyArrayType=|
+export app_config_singleElementArrayType=string1|
 ```
 
 Results in:
@@ -49,6 +51,10 @@ Results in:
     "string1",
     "string2",
     "string3"
+  ],
+  "emptyArrayType": [],
+  "singleElementArrayType": [
+    "string1"
   ]
 }
 ```

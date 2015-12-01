@@ -63,8 +63,6 @@ describe('Application config package', function () {
 
             should.not.exist(config.nodeEnv);
             should.not.exist(config.isDebug);
-            should.not.exist(config.isStage);
-            should.not.exist(config.isProduction);
         });
 
         it('should configure isDebug correctly', function () {
@@ -90,11 +88,15 @@ describe('Application config package', function () {
             before(function () {
                 process.env.app_config_db_user = 'envUser';
                 process.env.app_config_arrayType = 'string1|string2|string3';
+                process.env.app_config_singleElementArray = 'string1|';
+                process.env.app_config_emptyArray = '|';
             });
 
             after(function () {
                 delete process.env.app_config_db_user;
                 delete process.env.app_config_arrayType;
+                delete process.env.app_config_singleElementArray;
+                delete process.env.app_config_emptyArray;
             });
 
             it('should merge config correctly with environment variables', function () {
@@ -119,6 +121,27 @@ describe('Application config package', function () {
                     .should.be.an.Array()
                     .and.containDeep(['string1', 'string2', 'string3'])
                     .and.have.length(3);
+            });
+
+            it('should parse an empty array correctly', function () {
+                var config = appConfig();
+
+                should.exist(config.emptyArray);
+
+                config.emptyArray
+                    .should.be.an.Array()
+                    .and.have.length(0);
+            });
+
+            it('should parse a single element array correctly', function () {
+                var config = appConfig();
+
+                should.exist(config.singleElementArray);
+
+                config.singleElementArray
+                    .should.be.an.Array()
+                    .and.containDeep(['string1'])
+                    .and.have.length(1);
             });
 
             it('should create an additional property correctly', function () {

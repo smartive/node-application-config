@@ -61,7 +61,7 @@ function Config(options) {
                     } else if (helpers.isBoolean(value)) {
                         selectedObject[varPath[x]] = helpers.toBoolean(value);
                     } else if (value.indexOf('|') !== -1) {
-                        selectedObject[varPath[x]] = value.split('|');
+                        selectedObject[varPath[x]] = _.filter(value.split('|'));
                     } else {
                         selectedObject[varPath[x]] = value;
                     }
