@@ -1,37 +1,43 @@
-var should = require('should');
+import chai = require('chai');
+import {ApplicationConfig} from './ApplicationConfig';
+
+let should = chai.should();
 
 describe('Application config package', function () {
-    var appConfig = require('../index.js');
 
     describe('#constructor', function () {
+
+        afterEach(() => {
+            (ApplicationConfig as any)._config = null;
+            ApplicationConfig.configure({});
+            process.env.NODE_ENV = 'development';
+        });
+
         it('should return object', function () {
-            var config = appConfig();
+            let config = ApplicationConfig.config;
             should.exist(config);
         });
 
         it('should pass default options', function () {
-            var config = appConfig();
-            config.startupPath.should.be.equal(process.cwd());
+            let config = ApplicationConfig.config;
+            config.startupPath.should.equals(process.cwd());
         });
 
         it('should throw on wrong options', function () {
-            should.throws(function () {
-                var config = appConfig({
-                    startupPath: './'
-                });
-            });
-
-            should.throws(function () {
-                var config = appConfig({
+            (() => {
+                ApplicationConfig.configure({
                     configName: 'konfig.js'
                 });
-            });
+                ApplicationConfig.config;
+            }).should.throw();
         });
 
         it('should return correct config', function () {
-            var config = appConfig({
+            ApplicationConfig.configure({
                 localConfigName: 'noop.js'
             });
+
+            let config = ApplicationConfig.config;
 
             config.startupPath.should.be.equal(process.cwd());
             should.exist(config.db);
@@ -44,7 +50,7 @@ describe('Application config package', function () {
         });
 
         it('should merge config correctly with localconfig', function () {
-            var config = appConfig();
+            let config = ApplicationConfig.config;
 
             should.exist(config.db);
             should.exist(config.very.nested.config);
@@ -56,43 +62,53 @@ describe('Application config package', function () {
             config.very.nested.config.variableTwo.should.equal(true);
         });
 
+        it('should merge config correctly with environment configfile', function () {
+            process.env.NODE_ENV = 'test';
+
+            let config = ApplicationConfig.config;
+
+            should.exist(config.forTestEnv);
+
+            delete process.env.NODE_ENV;
+        });
+
         it('should disable isStage and isDebug', function () {
-            var config = appConfig({
+            ApplicationConfig.configure({
                 enableStateVariables: false
             });
 
-            should.not.exist(config.nodeEnv);
+            let config = ApplicationConfig.config;
+
             should.not.exist(config.isDebug);
         });
 
         it('should configure isDebug correctly', function () {
-            var config = appConfig();
+            let config = ApplicationConfig.config;
 
             config.nodeEnv.should.equal('development');
             config.isDebug.should.equal(true);
         });
 
         it('should configure isProduction correctly', function () {
-            var old = process.env.NODE_ENV;
             process.env.NODE_ENV = 'production';
 
-            var config = appConfig();
+            let config = ApplicationConfig.config;
 
             config.nodeEnv.should.equal('production');
             config.isDebug.should.equal(false);
 
-            process.env.NODE_ENV = old;
+            delete process.env.NODE_ENV;
         });
 
         describe('environmental variables', function () {
-            before(function () {
+            before(() => {
                 process.env.app_config_db_user = 'envUser';
                 process.env.app_config_arrayType = 'string1|string2|string3';
                 process.env.app_config_singleElementArray = 'string1|';
                 process.env.app_config_emptyArray = '|';
             });
 
-            after(function () {
+            after(() => {
                 delete process.env.app_config_db_user;
                 delete process.env.app_config_arrayType;
                 delete process.env.app_config_singleElementArray;
@@ -100,7 +116,7 @@ describe('Application config package', function () {
             });
 
             it('should merge config correctly with environment variables', function () {
-                var config = appConfig();
+                let config = ApplicationConfig.config;
 
                 should.exist(config.db);
                 should.exist(config.very.nested.config);
@@ -113,51 +129,49 @@ describe('Application config package', function () {
             });
 
             it('should parse an array correctly', function () {
-                var config = appConfig();
+                let config = ApplicationConfig.config;
 
                 should.exist(config.arrayType);
 
                 config.arrayType
-                    .should.be.an.Array()
-                    .and.containDeep(['string1', 'string2', 'string3'])
-                    .and.have.length(3);
+                    .should.be.an('array')
+                    .and.deep.equals(['string1', 'string2', 'string3']);
             });
 
             it('should parse an empty array correctly', function () {
-                var config = appConfig();
+                let config = ApplicationConfig.config;
 
                 should.exist(config.emptyArray);
 
                 config.emptyArray
-                    .should.be.an.Array()
-                    .and.have.length(0);
+                    .should.be.an('array')
+                    .and.have.lengthOf(0);
             });
 
             it('should parse a single element array correctly', function () {
-                var config = appConfig();
+                let config = ApplicationConfig.config;
 
                 should.exist(config.singleElementArray);
 
                 config.singleElementArray
-                    .should.be.an.Array()
-                    .and.containDeep(['string1'])
-                    .and.have.length(1);
+                    .should.be.an('array')
+                    .and.deep.equals(['string1']);
             });
 
             it('should create an additional property correctly', function () {
                 process.env.app_config_additional = 'additionalProperty';
-                var config = appConfig();
+                let config = ApplicationConfig.config;
 
                 should.exist(config.additional);
 
-                config.additional.should.be.equal('additionalProperty');
+                config.additional.should.equals('additionalProperty');
 
                 delete process.env.app_config_additional;
             });
 
             it('should create a nested additional property correctly', function () {
                 process.env.app_config_additional_variable = 'additionalProperty';
-                var config = appConfig();
+                let config = ApplicationConfig.config;
 
                 should.exist(config.additional);
                 should.exist(config.additional.variable);
@@ -169,16 +183,16 @@ describe('Application config package', function () {
         });
 
         describe('redirecting variables', function () {
-            before(function () {
+            before(() => {
                 process.env.TEST_ENV_VAR = 'setVariable';
             });
 
-            after(function () {
+            after(() => {
                 delete process.env.TEST_ENV_VAR;
             });
 
             it('should redirect the correct environment variables', function () {
-                var config = appConfig();
+                let config = ApplicationConfig.config;
 
                 should.exist(config.special);
                 should.exist(config.special.routes.redirect);
@@ -187,7 +201,7 @@ describe('Application config package', function () {
             });
 
             it('should leave the not set variables as they are', function () {
-                var config = appConfig();
+                let config = ApplicationConfig.config;
 
                 should.exist(config.special);
                 should.exist(config.special.routes.redirectNot);
@@ -203,25 +217,27 @@ describe('Application config package', function () {
         });
 
         it('should reload and merge config correctly', function () {
-            var config = appConfig();
+            let config = ApplicationConfig.config;
 
             config.db.user.should.equal('test');
 
             process.env.app_config_db_user = 'envUser';
 
-            config.reload();
+            ApplicationConfig.reload();
+            config = ApplicationConfig.config;
 
             config.db.user.should.equal('envUser');
         });
 
         it('should reload and merge isDebug correctly', function () {
-            var config = appConfig();
+            let config = ApplicationConfig.config;
 
             config.isDebug.should.equal(true);
 
             process.env.NODE_ENV = 'production';
 
-            config.reload();
+            ApplicationConfig.reload();
+            config = ApplicationConfig.config;
 
             config.isDebug.should.equal(false);
         });

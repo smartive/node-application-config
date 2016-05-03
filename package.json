@@ -1,10 +1,16 @@
 {
   "name": "node-application-config",
-  "version": "0.1.7",
+  "version": "0.2.0",
   "description": "Application config package that provides a config object with support for local overrides and environmental overrides",
   "main": "index.js",
   "scripts": {
-    "test": "node_modules/mocha/bin/mocha"
+    "clean": "rimraf build",
+    "bootstrap": "npm install && typings install",
+    "pretest": "npm run clean && tsc",
+    "test": "mocha --ui bdd --recursive ./build",
+    "precitest": "npm run bootstrap && npm run clean && tsc",
+    "citest": "istanbul cover -x \"**/*.spec.*\" _mocha --report lcovonly -- --ui bdd --recursive ./build",
+    "develop": "npm run clean && tsc -w"
   },
   "repository": {
     "type": "git",
@@ -27,8 +33,13 @@
   },
   "homepage": "https://github.com/buehler/node-application-config#readme",
   "devDependencies": {
+    "chai": "^3.5.0",
     "mocha": "^2.2.5",
-    "should": "^7.0.2"
+    "mocha-lcov-reporter": "^1.2.0",
+    "rimraf": "^2.5.2",
+    "tslint": "^3.7.1",
+    "typescript": "^1.8.9",
+    "typings": "^0.7.11"
   },
   "dependencies": {
     "lodash": "^3.10.1"

@@ -1,3 +1,21 @@
 language: node_js
 node_js:
-  - "0.12"
+- '5'
+- '4.2'
+- '0.12'
+
+script: npm run citest
+after_script: "npm install coveralls@^2.11.9 && cat ./coverage/lcov.info | coveralls"
+
+before_deploy:
+  - npm run bootstrap
+  - tsc --outDir .
+  
+deploy:
+  provider: npm
+  email: christoph.buehler@bluewin.ch
+  api_key:
+    secure: DdPQ0Ra/qVXG7TfuLn4KO+0lopTYYJnrJqKX4e6VQYPOIR7W1jwlwtA6U9vuWMYkwy4ykkzz694+R/LRcF+sfCEXVxzBGudHbIVl82LA5Ubx+12+UxFXeasiV9QKwBPkFnl4ws0eAR0JbooDa7P+8u+sOP3wgdBySeLlWESUN+WLE1mKWsYrxmVOZ1WjVZZxbciV+anF6wq+mjvHnbW46omXnisKocxvQQh3KzOutkqpYWDKSIXb2jvC9qjb/VmLhI/iZcvSJ9Cokc11e1Ln5LqU3MRDnXhyl+hR+Xz+Z5WZDiLpfIhPtDFEnPwpZwDHXCydJt8bswh88VfhGQvixKxeiCtl6IzNRs/c+YGgni7Fga9S1gjOsjx5M8t/cmZz+Vaua33FOU1DoXoo7tVaOZTWSpBTUvWWyvZW+aSYGf7K3iNNN9Ow0NDLGEZPkh7DAlOqqLeIhXinPLvw+lSNDGdTWHMzRyi0GzamdozIcdyb+9rJY7/C+UpAPZZsY9nYhRgXZQ8NH4Xvr1lR9zuBEd9NEwcZlucGSSzvuED6uX52bGw6C+hnOF3AbFXSYD/vdxfY170k7LJmDYDdvmHtyQ/uEpQz0Ddt6DuXx2Vb52HUiFBvg8U6jyGpVM0HT9MXgBdchvax0LyjaLGSjbfOLXyq01ZuK5iY9hvFX79euBE=
+  on:
+    tags: true
+    repo: buehler/node-application-config
