@@ -125,7 +125,6 @@ export class ApplicationConfig {
             }
         });
 
-        _.merge(config, envConfig);
-        ApplicationConfig._config = config;
+        ApplicationConfig._config = _.merge(config, envConfig);
     }
 }
