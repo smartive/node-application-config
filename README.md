@@ -1,8 +1,12 @@
-# node-application-config [![Build Status](https://travis-ci.org/buehler/node-application-config.svg?branch=master)](https://travis-ci.org/buehler/node-application-config)
+# node-application-config
 Package to provide application config with local config and environment support.
 This package allows you to simply override config variables by defining local config files or environment variables.
 
 Also `nodeEnv`, and `isDebug` are set based on `NODE_ENV`, which can be used in your code later on.
+
+##### A bunch of badges
+
+[![Build Status](https://travis-ci.org/smartive/node-application-config.svg?maxAge=3600)](https://travis-ci.org/smartive/node-application-config) [![npm](https://img.shields.io/npm/v/node-application-config.svg?maxAge=3600)](https://www.npmjs.com/package/node-application-config) [![Coverage status](https://img.shields.io/coveralls/smartive/node-application-config.svg?maxAge=3600)](https://coveralls.io/github/smartive/node-application-config) [![license](https://img.shields.io/github/license/smartive/node-application-config.svg?maxAge=2592000)](https://github.com/smartive/node-application-config)
 
 ## Features
 
