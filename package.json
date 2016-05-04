@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/buehler/node-application-config.git"
+    "url": "git+https://github.com/smartive/node-application-config.git"
   },
   "keywords": [
     "npm",
@@ -29,9 +29,9 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/buehler/node-application-config/issues"
+    "url": "https://github.com/smartive/node-application-config/issues"
   },
-  "homepage": "https://github.com/buehler/node-application-config#readme",
+  "homepage": "https://github.com/smartive/node-application-config#readme",
   "devDependencies": {
     "chai": "^3.5.0",
     "istanbul": "^0.4.3",
