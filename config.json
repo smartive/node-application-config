@@ -15,5 +15,9 @@
       "redirect": "${TEST_ENV_VAR}",
       "redirectNot": "${TEST_ENV_VAR_NOT_SET}"
     }
-  }
+  },
+  "file": "!{./requireconfig.json}",
+  "abs": "!{/requireconfig.json}",
+  "notfound": "!{./foobar.json}",
+  "err": "!{./requireerror.json}"
 }

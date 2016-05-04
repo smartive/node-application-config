@@ -48,3 +48,5 @@ coverage
 config.json
 config.local.json
 config.test.json
+requireconfig.json
+requireerror.json

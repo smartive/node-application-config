@@ -3,6 +3,7 @@ import fs = require('fs');
 import _ = require('lodash');
 
 const REDIRECT_PATTERN = /[$][{](.*)[}]/;
+const REQUIRE_PATTERN = /[!][{](.*[.]json)[}]/;
 const DEFAULTS: ApplicationConfigOptions = {
     startupPath: process.cwd(),
     configName: 'config.json',
@@ -26,9 +27,29 @@ function redirectVariable(value: string): string {
     if (!REDIRECT_PATTERN.test(value)) {
         return value;
     }
-    var matches = value.match(REDIRECT_PATTERN),
+    let matches = value.match(REDIRECT_PATTERN),
         varName = matches[matches.length - 1];
     return process.env[varName] || varName;
+}
+
+function requireFiles(value: string): any {
+    if (!REQUIRE_PATTERN.test(value)) {
+        return value;
+    }
+    let matches = value.match(REQUIRE_PATTERN),
+        varName = matches[matches.length - 1];
+    if (path.isAbsolute(varName)) {
+        return 'ABSOLUTE_PATH_NOT_ALLOWED';
+    }
+    let filePath = path.join(process.cwd(), varName);
+    if (!fs.existsSync(filePath)) {
+        return 'FILE_NOT_FOUND: ' + varName;
+    }
+    try {
+        return require(filePath);
+    } catch (e) {
+        return 'REQUIRE_ERROR: ' + e.message;
+    }
 }
 
 function isNumeric(number: string): boolean {
@@ -81,8 +102,8 @@ export class ApplicationConfig {
         let configFile = require(path.join(config.startupPath, ApplicationConfig.options.configName));
         _.merge(config, configFile);
 
-        ApplicationConfig._config = config;
         iterate(config, redirectVariable);
+        iterate(config, requireFiles);
 
         let envConfigPath = path.join(config.startupPath, ApplicationConfig.options.envConfigName.replace('ENV', config.nodeEnv));
 
