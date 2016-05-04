@@ -35,7 +35,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 
 [Unreleased]: https://github.com/smartive/node-application-config/compare/v0.2.0...develop
-[0.2.0]: https://github.com/smartive/node-application-config/compare/v0.2.0...v0.1.7
-[0.1.7]: https://github.com/smartive/node-application-config/compare/v0.1.7...v0.1.6
-[0.1.6]: https://github.com/smartive/node-application-config/compare/v0.1.6...v0.1.4
+[0.2.0]: https://github.com/smartive/node-application-config/compare/v0.1.7...v0.2.0
+[0.1.7]: https://github.com/smartive/node-application-config/compare/v0.1.6...v0.1.7
+[0.1.6]: https://github.com/smartive/node-application-config/compare/v0.1.4...v0.1.6
 [0.1.5]: https://github.com/smartive/node-application-config/tree/v0.1.4
