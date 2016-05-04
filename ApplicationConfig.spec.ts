@@ -106,6 +106,9 @@ describe('Application config package', function () {
                 process.env.app_config_arrayType = 'string1|string2|string3';
                 process.env.app_config_singleElementArray = 'string1|';
                 process.env.app_config_emptyArray = '|';
+                process.env.applicationConfig_custom_prefix = 'customPrefixTest';
+                process.env['app_config_custom-delimiter'] = 'customDelimiterTest';
+                process.env['appConfig_custom-delimiter'] = 'customPrefixDelimiterTest';
             });
 
             after(() => {
@@ -113,6 +116,40 @@ describe('Application config package', function () {
                 delete process.env.app_config_arrayType;
                 delete process.env.app_config_singleElementArray;
                 delete process.env.app_config_emptyArray;
+                delete process.env.applicationConfig_custom_prefix;
+                delete process.env['app_config_custom-delimiter'];
+                delete process.env['appConfig_custom-delimiter'];
+            });
+
+            it('should catch correct vars with custom prefix', () => {
+                ApplicationConfig.configure({
+                    environmentPrefix: 'applicationConfig_'
+                });
+
+                let config = ApplicationConfig.config;
+
+                config.custom.prefix.should.equals('customPrefixTest');
+            });
+
+            it('should catch correct vars with custom env delimiter', () => {
+                ApplicationConfig.configure({
+                    environmentDelimiter: '-'
+                });
+
+                let config = ApplicationConfig.config;
+
+                config.custom.delimiter.should.equals('customDelimiterTest');
+            });
+
+            it('should catch correct vars with custom env prefix and delimiter', () => {
+                ApplicationConfig.configure({
+                    environmentPrefix: 'appConfig_',
+                    environmentDelimiter: '-'
+                });
+
+                let config = ApplicationConfig.config;
+
+                config.custom.delimiter.should.equals('customPrefixDelimiterTest');
             });
 
             it('should merge config correctly with environment variables', function () {
